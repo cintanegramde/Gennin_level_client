@@ -1,5 +1,17 @@
 import React, { Component } from 'react'
 
+import gql from 'graphql-tag'
+
+const LOGIN_USER = gql`
+mutation LOGIN($email:String!,$password:String!){
+    CreateUser(data:{
+    email:$email, password:$password
+  }){
+    _id
+  }
+}
+`
+
 export default class LoginView extends Component{
     constructor(props){
         super(props);
@@ -7,6 +19,7 @@ export default class LoginView extends Component{
             email: '',
             password: ''
         }
+        console.log(props.client)
     }
 
     handleEmailChange = (e) => {
@@ -22,14 +35,11 @@ export default class LoginView extends Component{
     }
 
     handleSubmit = (e) => {
-        console.log("submit")
-        // if (this.state.email !== "" && this.state.password !== "") {
-        //     this.setState({
-        //         email: '',
-        //         password: ''
-        //     });
-        // }
         e.preventDefault();
+
+        this.props.client
+            .mutate({mutation: LOGIN_USER, variables:{ email: this.state.email, password: this.state.password }})
+            .then(result => console.log(result));
     }
 
     render(){

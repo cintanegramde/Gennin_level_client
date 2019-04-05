@@ -4,7 +4,7 @@ import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory'
 
 const httpLink = createHttpLink({
-    uri : 'https://intime-server.herokuapp.com/graphql'
+    uri : 'https://gennin-negra.herokuapp.com/'
 })
 
 const authLink = setContext((_, {headers}) => {
