@@ -19,7 +19,7 @@ class App extends Component {
       <BrowserRouter>
         <ApolloProvider client={client}>
           <Route exact path='/' component={() => <Login client={client}/>} />
-          <Route exact path='/home/:token' component={Welcome} />
+          <Route exact path='/home' component={Welcome} />
         </ApolloProvider>
       </BrowserRouter>
     );

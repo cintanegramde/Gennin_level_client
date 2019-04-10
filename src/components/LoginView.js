@@ -46,8 +46,8 @@ class LoginView extends Component{
                 // this.props.history.push(result.data.login)
                 // return <Link to={result.data.login} />
                 // <Redirect to={result.data.login} />
-                this.props.history.push(`/home/${result.data.login}`)
-
+                localStorage.setItem("token",result.data.login)
+                this.props.history.push(`/home`)
             })
     }
 

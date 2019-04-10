@@ -1,14 +1,31 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 
-export default class LoginView extends Component{
+export default class Welcome extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props)
+        this.state = {
+            isLoading: true
+        }
     }
 
-    render(){
-        return(
-            <div>Hello</div>
+    componentDidMount() {
+        let token = localStorage.getItem("token")
+        if (token) {
+            this.setState({
+                isLoading: false
+            }
+            )
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                {
+                    this.state.isLoading ? <div>Loading...</div> : <div>Hola usuario</div>
+                }
+            </div>
         )
     }
 }
