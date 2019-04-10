@@ -1,18 +1,16 @@
 import React, { Component } from 'react'
+import { Link, Redirect, withRouter} from 'react-router-dom';
 
 import gql from 'graphql-tag'
+import { resolve } from 'url';
 
 const LOGIN_USER = gql`
 mutation LOGIN($email:String!,$password:String!){
-    CreateUser(data:{
-    email:$email, password:$password
-  }){
-    _id
-  }
+    login(email:$email, password:$password)
 }
 `
 
-export default class LoginView extends Component{
+class LoginView extends Component{
     constructor(props){
         super(props);
         this.state = {
@@ -37,9 +35,20 @@ export default class LoginView extends Component{
     handleSubmit = (e) => {
         e.preventDefault();
 
+        // this.props.client
+        //     .mutate({mutation: LOGIN_USER, variables:{ email: this.state.email, password: this.state.password }})
+        //     .then(result => console.log(result));
+
         this.props.client
             .mutate({mutation: LOGIN_USER, variables:{ email: this.state.email, password: this.state.password }})
-            .then(result => console.log(result));
+            .then(result => {
+                console.log(result.data.login)
+                // this.props.history.push(result.data.login)
+                // return <Link to={result.data.login} />
+                // <Redirect to={result.data.login} />
+                this.props.history.push(`/home/${result.data.login}`)
+
+            })
     }
 
     render(){
@@ -66,3 +75,5 @@ export default class LoginView extends Component{
         )
     }
 }
+
+export default withRouter(LoginView)
